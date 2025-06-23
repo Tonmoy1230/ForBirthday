@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Waiting for Your Special Moment 🎉</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom, #fff0f5, #ffe6f0);
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ff69b4;
+      margin-bottom: 20px;
+    }
+
+    #countdown {
+      font-size: 2em;
+      color: #d63384;
+      margin-bottom: 40px;
+    }
+
+    #main, #birthday-section {
+      display: none;
+    }
+
+    button {
+      padding: 15px 30px;
+      border: none;
+      background-color: #ff69b4;
+      font-size: 1em;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 15px 0;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌙 A Special Surprise Awaits...</h1>
+  <div id="countdown">Loading countdown...</div>
+
+  <div id="main">
+    <p>It's time! 🎉 Let's check your volume first!</p>
+    <button onclick="checkVolume()">🔊 Check Volume</button>
+  </div>
+
+  <div id="birthday-section">
+    <p>✅ Volume good? Then, here’s something just for you 💖</p>
+    <button onclick="startShow()">🎁 Start the Surprise</button>
+  </div>
+
+  <!-- Test beep -->
+  <audio id="testSound">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/01/audio_eb5738c48b.mp3?filename=simple-beep-145903.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Birthday music -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9c3fcfa0df.mp3?filename=hbd-romantic-110781.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // 🎯 Set your target date and time here
+    const targetDate = new Date("2025-06-25T00:00:00"); // Example: June 24, 2025 @ 12:00 AM
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        // It's time!
+        document.getElementById("countdown").textContent = "🎉 It's time! The surprise is ready!";
+        document.getElementById("main").style.display = "block";
+      } else {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("countdown").textContent =
+          `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s until the magic begins!`;
+
+        setTimeout(updateCountdown, 1000);
+      }
+    }
+
+    function checkVolume() {
+      const testSound = document.getElementById('testSound');
+      testSound.volume = 0.5;
+      testSound.play();
+
+      alert("✅ Did you hear the test sound? If not, increase your volume 🔊");
+      document.getElementById('birthday-section').style.display = 'block';
+    }
+
+    function startShow() {
+      document.getElementById('bgMusic').play();
+      window.location.href = "birthday.html"; // Link to your surprise page
+    }
+
+    // Start the countdown on page load
+    updateCountdown();
+  </script>
+
+</body>
+</html>
